@@ -27,3 +27,13 @@ describe('path to add a new city', {:type => :feature}) do
     expect(page).to have_content('MAX City')
   end
 end
+
+describe('path to view train info', {:type => :feature}) do
+  it('allows user to view a list of cities where train stops') do
+    pickle_train = Train.new({ :name => "pickle train", :id => nil })
+    pickle_train.save()
+    visit('/')
+    click_link('pickle train')
+    expect(page).to have_content('pickle train')
+  end
+end
