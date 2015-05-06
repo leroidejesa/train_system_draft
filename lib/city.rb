@@ -54,4 +54,8 @@ class City
     cities_trains
   end
 
+  define_method(:delete) do
+    DB.exec("DELETE FROM trains_cities WHERE city_id = #{self.id()};")
+    DB.exec("DELETE FROM cities WHERE id = #{self.id()};")
+  end
 end
