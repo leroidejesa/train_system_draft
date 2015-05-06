@@ -55,6 +55,14 @@ describe(Train) do
       test_train.update({:name => "MAX Grey"})
       expect(test_train.name()).to(eq("MAX Grey"))
     end
+    it("lets you add a city to an train") do
+      test_city = City.new ({:name => "Portland", :id => nil})
+      test_city.save()
+      test_train = Train.new({:name => "MAX Red", :id => nil})
+      test_train.save()
+      test_train.update({:city_ids => [test_city.id()]})
+      expect(test_train.cities()).to(eq([test_city]))
+    end
   end
 
   describe("#delete") do
@@ -65,6 +73,20 @@ describe(Train) do
       test_train2.save()
       test_train.delete()
       expect(Train.all()).to(eq([test_train2]))
+    end
+  end
+
+  describe("#cities") do
+    it("returns all of the cities a particular train goes to") do
+      test_city = City.new({:name => "Portland", :id => nil})
+      test_city.save()
+      test_city2 = City.new({:name => "Vancouver", :id => nil})
+      test_city2.save()
+      test_train = Train.new({:name => "Max Red", :id => nil})
+      test_train.save()
+      test_train.update({:city_ids => [test_city.id()]})
+      test_train.update({:city_ids => [test_city2.id()]})
+      expect(test_train.cities()).to(eq([test_city, test_city2]))
     end
   end
 
