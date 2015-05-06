@@ -33,4 +33,25 @@ class City
     self.name().==(another_city.name()).&(self.id().==(another_city.id()))
   end
 
+  define_method(:update) do |attributes|
+    @name = attributes.fetch(:name, @name)
+    DB.exec("UPDATE cities SET name = '#{@name}' WHERE id = #{self.id()};")
+
+    attributes.fetch(:train_ids, []).each() do |train_id|
+      DB.exec("INSERT INTO trains_cities (train_id, city_id) VALUES (#{train_id}, #{self.id()});")
+    end
+  end
+
+  define_method(:trains) do
+    cities_trains = []
+    results = DB.exec("SELECT train_id FROM trains_cities WHERE city_id = #{self.id()};")
+    results.each() do |result|
+      train_id = result.fetch("train_id").to_i()
+      train = DB.exec("SELECT * FROM trains WHERE id = #{train_id};")
+      name = train.first().fetch("name")
+      cities_trains.push(Train.new({:name => name, :id => train_id}))
+    end
+    cities_trains
+  end
+
 end

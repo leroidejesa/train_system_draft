@@ -39,5 +39,19 @@ describe(City) do
       expect(test_city).to(eq(test_city2))
     end
   end
-  
+
+  describe("#update") do
+    it('lets you add a train to a city') do
+      city = City.new({:name => "portland", :id => nil})
+      city.save()
+      red = Train.new({:name => "MAX Red", :id => nil})
+      red.save()
+      blue = Train.new({:name => "MAX Blue", :id => nil})
+      blue.save()
+      city.update({:train_ids => [red.id(), blue.id()]})
+      expect(city.trains()).to(eq([red, blue]))
+    end
+  end
+
+
 end
