@@ -15,3 +15,15 @@ describe('path to add a new train', {:type => :feature}) do
     expect(page).to have_content('MAX White')
   end
 end
+
+describe('path to add a new city', {:type => :feature}) do
+  it('allows an operator to add a new city') do
+    visit('/')
+    click_link('Train Operators')
+    click_link('Add a city')
+    fill_in('city_name', :with =>'MAX City')
+    click_button('Add')
+    click_link('Home')
+    expect(page).to have_content('MAX City')
+  end
+end
