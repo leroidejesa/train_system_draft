@@ -22,4 +22,50 @@ describe(Train) do
     end
   end
 
+  describe(".find") do
+    it("returns a train by its ID number") do
+      test_train = Train.new({:name => "MAX Red", :id => nil})
+      test_train.save()
+      test_train2 = Train.new({:name => "MAX Blue", :id => nil})
+      test_train2.save()
+      expect(Train.find(test_train2.id())).to(eq(test_train2))
+    end
+  end
+
+  describe("#save") do
+    it("lets you add a train to the train table") do
+      test_train = Train.new({:name => "MAX Red", :id => nil})
+      test_train.save()
+      expect(Train.all()).to(eq([test_train]))
+    end
+  end
+
+  describe("#==") do
+    it("will return the same train if the train you entered has the same name and id") do
+      test_train = Train.new({:name => "MAX Red", :id => nil})
+      test_train2 = Train.new({:name => "MAX Red", :id => nil})
+      expect(test_train).to(eq(test_train2))
+    end
+  end
+
+  describe("#update") do
+    it("update trains in the database") do
+      test_train = Train.new({:name => "MAX Red", :id => nil})
+      test_train.save()
+      test_train.update({:name => "MAX Grey"})
+      expect(test_train.name()).to(eq("MAX Grey"))
+    end
+  end
+
+  describe("#delete") do
+    it("lets you delete a train from the database") do
+      test_train = Train.new({:name => "MAX Red", :id => nil})
+      test_train.save()
+      test_train2 = Train.new({:name => "MAX Black", :id => nil})
+      test_train2.save()
+      test_train.delete()
+      expect(Train.all()).to(eq([test_train2]))
+    end
+  end
+
 end
