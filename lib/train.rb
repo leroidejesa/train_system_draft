@@ -1,9 +1,10 @@
 class Train
-  attr_reader(:name,:id)
+  attr_reader(:name,:id,:stop)
 
   define_method(:initialize) do |attributes|
     @name = attributes[:name]
     @id = attributes[:id]
+    @stop = attributes[:stop]
   end
 
   define_singleton_method(:all) do
@@ -37,9 +38,10 @@ class Train
     @name = attributes.fetch(:name, @name)
     @id = self.id()
     DB.exec("UPDATE trains SET name = '#{@name}' WHERE id = #{self.id()};")
-
+    stop = attributes.fetch(:stop_time, [])
     attributes.fetch(:city_ids, []).each() do |city_id|
-      DB.exec("INSERT INTO trains_cities (train_id, city_id) VALUES (#{self.id()}, #{city_id});")
+
+      DB.exec("INSERT INTO trains_cities (train_id, city_id, stop_time) VALUES (#{self.id()}, #{city_id}, '#{stop}');")
     end
   end
 
@@ -50,9 +52,22 @@ class Train
       city_id = result.fetch("city_id").to_i()
       city = DB.exec("SELECT * FROM cities WHERE id = #{city_id};")
       name = city.first().fetch("name")
+      
       train_cities.push(City.new({:name => name, :id => city_id}))
     end
     train_cities
+  end
+
+  define_method(:stop_time) do
+    train_stop = []
+    results = DB.exec("SELECT stop_time FROM trains_cities WHERE train_id = #{self.id()};")
+    results.each() do |result|
+      city_id = result.fetch("city_id").to_i()
+      city = DB.exec("SELECT * FROM t WHERE id = #{city_id};")
+      stop_time = result.fetch("")
+      train_stop.push(stop_time)
+    end
+    train_stop
   end
 
   define_method(:delete) do

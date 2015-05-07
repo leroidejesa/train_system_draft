@@ -1,0 +1,9 @@
+ define_method(:times) do
+  all_train_times = []
+  all_trains_cities = DB.exec("SELECT * FROM trains_cities WHERE train_id = #{self.id()} ;")
+  all_trains_cities.each() do |t_c|
+    times = DB.exec("SELECT * FROM stop_time WHERE city_id = 'asdf;ljk';")
+    all_train_times.push(times)
+  end
+  all_train_times
+end

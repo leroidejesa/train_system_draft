@@ -67,8 +67,10 @@ patch("/trains/:id") do
   train_id = params.fetch("id").to_i()
   @train = Train.find(train_id)
   city_ids = params.fetch("city_ids")
-  @train.update({:city_ids => city_ids})
+  stop_time = params.fetch("stop_time")
+  @train.update({:city_ids => city_ids, :stop_time => stop_time})
   @cities = City.all()
+
   erb(:train_info)
 end
 
@@ -113,4 +115,20 @@ patch("/edit_cities/:id") do
   @city = City.find(params.fetch("id").to_i())
   @city.update({:name => city_name})
   erb(:success)
+end
+
+delete("/trains/:id") do
+  @cities = City.all()
+  @train = Train.find(params.fetch("id").to_i())
+  @train.delete()
+  @trains = Train.all()
+  erb(:index)
+end
+
+delete("/cities/:id") do
+  @trains = Train.all()
+  @city = City.find(params.fetch("id").to_i())
+  @city.delete()
+  @cities = City.all()
+  erb(:index)
 end

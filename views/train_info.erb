@@ -12,7 +12,13 @@
     <label>
       <input type="checkbox" name="city_ids[]" value="<%= city.id() %>"><%= city.name() %>
     </label>
-  </div>
+  <label for="stop_time">Select a time</label>
+  <select id='stop_time' name='stop_time' type='text'>
+    <option value="8:00"> 8:00am </option>
+
+
+  </select>
+</div>
   <% end %>
 
   <button type="submit">Add cities</button>

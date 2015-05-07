@@ -1,5 +1,12 @@
 <h1><%= @train.name() %></h1>
 
+<label for="city_id">Select a city</label>
+<select id='city_id' name='city_id' type='text'>
+  <% @train.cities().each() do |city| %>
+  <option value="<%= city.id()%>"> <%= city.name() %> </option>
+  <% end %>
+</select>
+
 <% if @train.cities().any?() %>
 <h3>This train stops at the following cities:</h3>
 

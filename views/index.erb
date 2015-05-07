@@ -1,11 +1,11 @@
 <h1>Welcome to Train-ing Day!</h1>
-<h2>A place where you can train to be a Train Master</h2>
+<h4>A place where you can train to be a Train Master</h4>
 <p>Already are? <a href="/operators/new">Click here!</a>
 
-<h3>Here are all the trains in this database:</h3>
+<h3>Trains:</h3>
 
 <% if @trains.any?() %>
-<p>Click on an train to see information about them and mark which cities they were in:</p>
+<p>Click on a train to see it's schedule:</p>
 
 <ul>
   <% @trains.each do |train| %>
@@ -17,10 +17,10 @@
 <% end %>
 
 
-<h3>Here are all the cities in this database:</h3>
+<h3>Cities:</h3>
 
 <% if @cities.any?() %>
-<p>Click on a city to see information about it and mark which trains were in it:</p>
+<p>Click on a city to see it's train schedule:</p>
 
 <ul>
   <% @cities.each do |city| %>

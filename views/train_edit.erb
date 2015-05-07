@@ -1,0 +1,16 @@
+<h1>Update the <%=@train.name() %></h1>
+
+<form action="/edit_trains/<%= @train.id() %>" method="post">
+  <input name="_method" type="hidden" value="patch">
+
+  <label for="train_name">Rename your train:</label>
+  <input id="train_name" name="train_name" type="text">
+
+  <button type="submit">Update</button>
+</form>
+
+<form action="/trains/<%= @train.id() %>" method="post">
+  <input name="_method" type = "hidden" value="delete">
+
+  <button type="submit">Delete train</button>
+</form>
