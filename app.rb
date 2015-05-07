@@ -86,3 +86,31 @@ get("/cities/:id") do
   @trains = Train.all()
   erb(:user_city_info)
 end
+
+get("/trains/:id/edit") do
+  @train = Train.find(params.fetch("id").to_i())
+  erb(:train_edit)
+end
+
+patch("/edit_trains/:id") do
+  @trains = Train.all()
+  @cities = City.all()
+  train_name = params.fetch("train_name")
+  @train = Train.find(params.fetch("id").to_i())
+  @train.update({:name => train_name})
+  erb(:success)
+end
+
+get("/cities/:id/edit") do
+  @city = City.find(params.fetch("id").to_i())
+  erb(:city_edit)
+end
+
+patch("/edit_cities/:id") do
+  @trains = Train.all()
+  @cities = City.all()
+  city_name = params.fetch("city_name")
+  @city = City.find(params.fetch("id").to_i())
+  @city.update({:name => city_name})
+  erb(:success)
+end
