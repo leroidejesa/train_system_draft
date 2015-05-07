@@ -1,0 +1,35 @@
+<h1><%= @train.name() %></h1>
+
+<h3>Select all cities starring this train:</h3>
+
+<% if @cities.any?() %>
+<form action="/trains/<%= @train.id %>" method="post">
+  <input type="hidden" name="_method" value="patch">
+
+  <% @cities.each() do |city| %>
+  <div class="checkbox">
+    <label>
+      <input type="checkbox" name="city_ids[]" value="<%= city.id() %>"><%= city.name() %>
+    </label>
+  </div>
+  <% end %>
+
+  <button type="submit">Add cities</button>
+</form>
+<% end %>
+
+
+<% if @train.cities().any?() %>
+<h3>This train stops at the following cities:</h3>
+
+<ul>
+  <% @train.cities().each() do |city| %>
+  <li><%= city.name() %></li>
+  <% end %>
+</ul>
+<% else %>
+<p>There are no cities yet!</p>
+<% end %>
+
+
+<a href="/">Return to Main Page</a>
