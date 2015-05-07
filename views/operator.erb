@@ -1,0 +1,33 @@
+<h1>Train Master Page</h1>
+
+<a href="/trains">Add a train</a>
+<a href="/cities">Add a city</a>
+
+<h4>Here are all the trains in this database:</h4>
+
+  <% if @trains.any?() %>
+  <p>Click on an train to see information about them and mark which cities they were in:</p>
+
+  <ul>
+    <% @trains.each do |train| %>
+    <li><a href="/operator_trains/<%= train.id() %>"><%= train.name() %></a></li>
+    <% end %>
+  </ul>
+  <% else %>
+  <p>There are no trains added yet!</p>
+  <% end %>
+
+
+  <h4>Here are all the cities in this database:</h4>
+
+  <% if @cities.any?() %>
+  <p>Click on a city to see information about it and mark which trains were in it:</p>
+
+  <ul>
+    <% @cities.each do |city| %>
+    <li><a href="/operator_cities/<%= city.id() %>"><%= city.name() %></a></li>
+    <% end %>
+  </ul>
+  <% else %>
+  <p>There are no cities added yet!</p>
+  <% end %>

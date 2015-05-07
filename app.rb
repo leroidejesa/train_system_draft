@@ -14,6 +14,8 @@ get('/') do
 end
 
 get('/operators/new') do
+  @trains = Train.all()
+  @cities = City.all()
   erb(:operator)
 end
 
@@ -46,7 +48,19 @@ end
 get("/trains/:id") do
   @train = Train.find(params.fetch("id").to_i())
   @cities = City.all()
+  erb(:user_train_info)
+end
+
+get("/operator_trains/:id") do
+  @train = Train.find(params.fetch("id").to_i())
+  @cities = City.all()
   erb(:train_info)
+end
+
+get("/operator_cities/:id") do
+  @city = City.find(params.fetch("id").to_i())
+  @trains = Train.all()
+  erb(:city_info)
 end
 
 patch("/trains/:id") do
@@ -70,5 +84,5 @@ end
 get("/cities/:id") do
   @city = City.find(params.fetch("id").to_i())
   @trains = Train.all()
-  erb(:city_info)
+  erb(:user_city_info)
 end
